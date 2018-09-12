@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+		<referenceBlock name="head.additional">
+            <block class="Magento\Framework\View\Element\Template" name="script.sharethis" template="MGS_Mpanel::sharethis/sharethis_script.phtml" ifconfig="mpanel/share_config/share_product_detail"/>
+        </referenceBlock>
+		
+		<block class="Magento\Theme\Block\Html\Title" name="mgs.product.title" template="Magento_Theme::html/title.phtml"/>
+		
+		<referenceBlock name="product.info.extrahint" remove="true"/>
+		
+		<referenceBlock name="product.info.sku" remove="true"/>
+		
+		<move element="mgs.product.title" destination="product.info.main" before="-" />
+		
+		<container name="product.info.sku.brand" htmlTag="div" htmlClass="product-sub-infomation" after="product.info.review">
+			<block class="Magento\Catalog\Block\Product\View\Description" name="mgs.product.info.sku" template="product/view/attribute.phtml">
+				<arguments>
+					<argument name="at_call" xsi:type="string">getSku</argument>
+					<argument name="at_code" xsi:type="string">sku</argument>
+					<argument name="css_class" xsi:type="string">sku</argument>
+					<argument name="at_label" xsi:type="string">default</argument>
+					<argument name="add_attribute" xsi:type="string">itemprop="sku"</argument>
+				</arguments>
+			</block>
+		</container>
+		
+		<move element="product.info.sku.brand" destination="product.info.main" after="product.info.price" />
+		
+		<move element="product.brand.name" destination="product.info.sku.brand" after="-" />
+	</body>
+</page>

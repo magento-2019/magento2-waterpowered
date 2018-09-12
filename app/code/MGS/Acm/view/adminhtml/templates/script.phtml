@@ -1,0 +1,24 @@
+<script>
+	require([
+		'jquery'
+	], function(jQuery){
+		(function($) {
+			$("#acm_identifier").keydown(function(event) {
+				if ( event.which != 13 ) {
+					var identifier = $(this).val();
+					$("#router-change").html(identifier);
+				}else{
+					event.preventDefault();
+				}
+			});
+			$("#acm_identifier").keyup(function(event) {
+				if ( event.which != 13 ) {
+					var identifier = $(this).val();
+					$("#router-change").html(identifier);
+				}else{
+					event.preventDefault();
+				}
+			});
+		})(jQuery);
+	});
+</script>

@@ -1,0 +1,32 @@
+<page_layouts xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/PageLayout/etc/layouts.xsd">
+    <layout id="sowash-layout">
+        <label translate="true">Sowash Layout</label>
+    </layout>
+	<layout id="sowash-faq-layout">
+        <label translate="true">Sowash FAQ Layout</label>
+    </layout>
+	<layout id="mypfc-layout">
+        <label translate="true">MyPerfectColon Layout</label>
+    </layout>
+	<layout id="mypfc-faq-layout">
+        <label translate="true">MyPerfectColon FAQ Layout</label>
+    </layout>
+	<layout id="hellobidet-layout">
+        <label translate="true">HelloBidet Layout</label>
+    </layout>
+	<layout id="hellobidet-faq-layout">
+        <label translate="true">HelloBidet FAQ Layout</label>
+    </layout>
+	<layout id="pinkshower-layout">
+        <label translate="true">PinkShower Layout</label>
+    </layout>
+	<layout id="pinkshower-faq-layout">
+        <label translate="true">PinkShower FAQ Layout</label>
+    </layout>
+	<layout id="hellobear-layout">
+        <label translate="true">HelloBear Layout</label>
+    </layout>
+	<layout id="hellobear-faq-layout">
+        <label translate="true">HelloBear FAQ Layout</label>
+    </layout>
+</page_layouts>

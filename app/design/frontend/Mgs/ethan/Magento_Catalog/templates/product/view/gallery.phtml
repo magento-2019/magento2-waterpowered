@@ -1,0 +1,94 @@
+<?php
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/**
+ * Product media data template
+ *
+ * @var $block \Magento\Catalog\Block\Product\View\Gallery
+ */
+?>
+<input type="hidden" id="product_type_gallery" name="product_type_gallery" value="normal"/>
+<div class="product media">
+<?php $_product = $block->getProduct(); ?>
+<?php $_imagehelper = $this->helper('Magento\Catalog\Helper\Image'); ?>
+<?php $imgBase = $_imagehelper->init($_product, 'category_page_list')->getUrl(); ?>
+
+
+<?php $galleryImages = $block->getGalleryImages() ?>
+<?php if(count($galleryImages)): ?>
+	<?php $k = 0; foreach($galleryImages as $image): $k++; ?>
+		<?php if($k == 1): ?><?php $imgBase = $image->getLargeImageUrl(); ?><?php endif ?>
+		<?php if($image->getIsBaseImage()): ?>
+			<?php $imgBase = $image->getLargeImageUrl();?>
+		<?php endif ?>
+	<?php endforeach ?>
+	<div class="product-image-base">
+		<img class="img-responsive" src="<?php echo $imgBase; ?>" alt=""/>
+	</div>
+	<?php if(count($galleryImages) > 1): ?>
+		<div class="parent__gallery-thumbnail">
+			<div class="product-gallery-carousel gallery-thumbnail owl-carousel">
+				<?php foreach($galleryImages as $image): ?>
+					<div class="item">
+						<div class="image-item<?php if($image->getMediaType() == 'external-video'): ?> video-thumbnail<?php endif ?><?php if($image->getIsBaseImage() || $imgBase == $image->getLargeImageUrl()): ?> base-image active<?php endif ?>" data-img-change="<?php echo $image->getLargeImageUrl(); ?>">
+							<?php if($image->getMediaType() == 'external-video'): ?>
+								<a href="<?php echo $image->getVideoUrl(); ?>">
+							<?php endif ?> 
+									<img class="img-responsive" src="<?php echo $image->getMediumImageUrl(); ?>" alt=""/>
+							<?php if($image->getMediaType() == 'external-video'): ?>
+								</a>
+							<?php endif ?> 
+						</div>
+					</div>
+				<?php endforeach ?>
+			</div>
+		</div>
+	<?php endif ?>
+	<script type="text/javascript">
+		require([
+			'jquery',
+			'mgs/owlcarousel',
+			'YouTubePopUp'
+		], function ($) {
+			<?php if(count($galleryImages) > 1): ?>
+				$('.product-gallery-carousel').owlCarousel({
+					items: 4,
+					autoplay: false,
+					autoplayHoverPause: false,
+					nav: true,
+					dots: false,
+					navText: ['<i class="fa fa-angle-left"></i>','<i class="fa fa-angle-right"></i>'],
+					responsive:{
+						0:{
+							items:2
+						},
+						480:{
+							items:2
+						},
+						768:{
+							items:3
+						},
+						992:{
+							items:4
+						}
+					}
+				});
+			<?php endif ?>
+			$(document).ready(function() {
+				zoomElement(".product-image-base");
+				$(".product-video-button a").YouTubePopUp();
+				$(".image-item.video-thumbnail a").YouTubePopUp();
+			});
+		});
+	</script>
+<?php else: ?>
+	<div class="product-image-base">
+		<img class="img-responsive" src="<?php echo $imgBase; ?>" alt=""/>
+	</div>
+<?php endif ?>
+</div>

@@ -1,0 +1,43 @@
+<div>
+	<table class="data-grid">
+		<tr>
+			<th class="data-grid-th col-title"><span>Title</span></th>			
+			<th class="data-grid-th col-identifier"><span>Identifier</span></th>			
+			<th class="data-grid-th col-type"><span>Input Type</span></th>
+			<th class="data-grid-th col-required"><span>Is Required</span></th>
+			<th class="data-grid-th con-show-grid"><span>Show In Grid</span></th>
+			<th class="data-grid-th col-note"><span>Note</span></th>
+		</tr>
+		<tr class="data-grid-filters">
+			<td><input type="text" class="input-text admin__control-text" value="" name="field[][title]"></td>			
+			<td><input type="text" class="input-text admin__control-text" value="" name="field[][identifier]"></td>			
+			<td>
+				<select class="no-changes admin__control-select" name="field[][type]">
+					<option value=""></option>
+					<option value="text">Text</option>
+					<option value="textarea">Text area</option>
+					<option value="file">File</option>
+					<option value="image">Image</option>
+					<option value="dropdown">Dropdown</option>
+					<option value="radio">Radio button</option>
+					<option value="checkbox">Checkbox</option>
+					<option value="multiselect">Multiselect</option>
+					<option value="datetime">Date Time</option>
+				</select>
+			</td>
+			<td>
+				<select class="no-changes admin__control-select" name="field[][require]">
+					<option value="0">No</option>
+					<option value="1">Yes</option>
+				</select>
+			</td>
+			<td>
+				<select class="no-changes admin__control-select" name="field[][in_grid]">
+					<option value="0">No</option>
+					<option value="1">Yes</option>
+				</select>
+			</td>
+			<td><input type="text" class="input-text admin__control-text" value="" name="field[][note]"></td>
+		</tr>
+	</table>
+</div>

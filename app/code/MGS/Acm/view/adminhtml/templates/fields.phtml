@@ -1,0 +1,204 @@
+<?php $contentType = $this->getAcmContentType() ?>
+<?php if($contentType->getContentType()==1): ?>
+	<div class="message message-notice notice" style="margin-left:0; margin-right:0; margin-bottom:15px">
+		<div data-ui-id="messages-message-notice">
+			<?php echo __('After update fields, please "Save & Generate Template Files".') ?><br/>
+		</div>
+	</div>
+<?php else: ?>
+	<?php if($contentType->getFormAction()!=3): ?>
+		<div class="message message-notice notice" style="margin-left:0; margin-right:0; margin-bottom:15px">
+			<div data-ui-id="messages-message-notice">
+				<?php echo __('After update fields, please "Save & Generate Template Email".') ?><br/>
+			</div>
+		</div>
+	<?php endif ?>
+<?php endif ?>
+<?php echo $this->getHtmlFields() ?>
+
+<script>
+	require([
+		'jquery'
+	], function(jQuery){
+		(function($) {
+			var lastId = <?php echo $this->getLastId() ?>;
+			var tabTemplate = $("#field-template").html();
+			$("#field-template .required-entry").removeClass('required-entry');
+			
+			$("#add-new-field").click(function() {
+				lastId++;
+				innerTemplate = tabTemplate.replace(/{{number}}/g, lastId);
+				$("#field-items").append(innerTemplate);
+				
+				$('#grid_tab'+lastId).tabs({
+					active: 'grid_tab_main_field',
+					destination: '#grid_tab_content'+lastId,
+					shadowTabs: []        
+				});
+				
+				$(".input-field-title").keydown(function(event) {
+					if ( event.which != 13 ) {
+						var dInput = $(this).val();
+						dInput = dInput.replace(/[^a-z0-9\s]/gi, '').replace(/[_\s]/g, '_').toLowerCase();
+						$(this).parents("tr").find('.input-field-identifier').val(dInput);
+					}else{
+						event.preventDefault();
+					}
+				});
+				$(".input-field-title").keyup(function(event) {
+					if ( event.which != 13 ) {
+						var dInput = $(this).val();
+						dInput = dInput.replace(/[^a-z0-9\s]/gi, '').replace(/[_\s]/g, '_').toLowerCase();
+						$(this).parents("tr").find('.input-field-identifier').val(dInput);
+					}else{
+						event.preventDefault();
+					}
+				});
+				
+				//var pos = [];
+				$('.input-position').each(function(idx) {
+					//pos[idx] = $(this).val();
+					$(this).val(idx);
+				});
+				
+				sortField();
+			});
+			
+			/* $("button.remove-tab").click(function() {
+				$(this).parents("li").remove();
+			}); */
+			
+			sortField();
+			
+		})(jQuery);
+	});
+	
+	
+	
+	require(["jquery","mage/backend/tabs"], function($){
+		$(function() {
+			<?php $existFields = $this->getFieldsForm() ?>
+			<?php if(count($existFields)>0): ?>
+				<?php foreach($existFields as $field): ?>
+					$('#grid_tab<?php echo $field->getId() ?>').tabs({
+						active: 'grid_tab_main_field',
+						destination: '#grid_tab_content<?php echo $field->getId() ?>',
+						shadowTabs: []        
+					});
+				<?php endforeach ?>
+			<?php endif ?>
+			
+			$('#grid_tab').tabs({
+				active: 'grid_tab_main_field',
+				destination: '#grid_tab_content',
+				shadowTabs: []        
+			});
+		});
+	});
+	
+	function removeField(numberEl){
+		require([
+			'jquery'
+		], function(jQuery){
+			(function($) {
+				$('#grid_tab'+numberEl).remove();
+				$('#grid_tab_content'+numberEl).remove();
+				if ($("#remove"+numberEl).length) {
+					$("#remove"+numberEl).val(numberEl);
+				}
+			})(jQuery);
+		});
+	}
+	
+	function setAdditionalInfo(val,numberEl){
+		require([
+			'jquery'
+		], function(jQuery){
+			(function($) {
+				switch(val) {
+					case 'text':
+						additionalInfo = '<?php echo $this->getAdditionalInformationHtml('text') ?>';
+						break;
+					case 'textarea':
+						additionalInfo = '<?php echo $this->getAdditionalInformationHtml('textarea') ?>';
+						break;
+					case 'file':
+						additionalInfo = '<?php echo $this->getAdditionalInformationHtml('file') ?>';
+						break;
+					case 'image':
+						additionalInfo = '<?php echo $this->getAdditionalInformationHtml('image') ?>';
+						break;
+					case 'date':
+						additionalInfo = '<?php echo $this->getAdditionalInformationHtml('date') ?>';
+						break;
+					case 'store':
+						additionalInfo = '<?php echo $this->getAdditionalInformationHtml('store') ?>';
+						break;
+					case 'products':
+						additionalInfo = '<?php echo $this->getAdditionalInformationHtml('products') ?>';
+						break;
+					default:
+						additionalInfo = '<?php echo $this->getAdditionalInformationHtml('dropdown') ?>';
+						break;
+				}
+				additionalInfo = additionalInfo.replace(/{{number}}/g, numberEl);
+				$('#additional-item-content'+numberEl).html(additionalInfo);
+			})(jQuery);
+		});
+	}
+	
+	function addNewOption(elNumber, el){
+		require([
+			'jquery'
+		], function(jQuery){
+			(function($) {
+				hiddenOption = $('#input-hidden'+elNumber).val();
+				hiddenOption++;
+				var rowTemplate = '<tr class="row-option"><td><input type="text" name="field[{{number}}][additional_content][option]['+hiddenOption+'][title]" class="input-text required-entry"/></td><td><input type="text" name="field[{{number}}][additional_content][option]['+hiddenOption+'][value]" class="input-text"/></td><td><input type="text" name="field[{{number}}][additional_content][option]['+hiddenOption+'][position]" class="input-text"/></td><td><button class="action- scalable delete delete-option" type="button" title="Delete" onclick="removeOption(this)"><span><?php echo __('Delete') ?></span></button></td></tr>';
+				rowTemplate = rowTemplate.replace(/{{number}}/g, elNumber);
+				$("#option-table"+elNumber).append(rowTemplate);
+				$('#input-hidden'+elNumber).val(hiddenOption);
+			})(jQuery);
+		});
+	}
+	
+	function sortField(){
+		require([
+			'jquery',
+			'jquery/ui'
+		], function(jQuery){
+			(function($) {
+				$("#field-items").sortable({ 
+					handle: '.draggable-handle',
+					stop: function () {
+						//var nbElems = $('.input-position').length;
+						$('.input-position').each(function(idx) {
+							$(this).val(idx);
+						});
+					}
+				});
+				//$("#sortable").disableSelection();
+			})(jQuery);
+		});		
+	}
+	
+	function removeOption(el){
+		require([
+			'jquery'
+		], function(jQuery){
+			(function($) {
+				$(el).parents('tr.row-option').remove();
+			})(jQuery);
+		});
+	}
+	
+	/* function filterValue(string){
+		require([
+			'jquery'
+		], function(jQuery){
+			(function($) {
+				result = string.replace(/[^a-z0-9\s]/gi, '').replace(/[_\s]/g, '-')
+			})(jQuery);
+		});
+	} */
+</script>

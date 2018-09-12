@@ -1,0 +1,55 @@
+<?php
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php $helper = $this->helper('MGS\Mpanel\Helper\Data') ?>
+<?php $header = $helper->getStoreConfig('mgstheme/general/header') ?>
+<div class="breadcrumbs <?php if($header == 'header_5') echo 'breadcrumbs-no-bg';?>">
+	<div class="container">
+		<div class="breadcrumbs-content">
+			<div class="breadcrumbs-title">
+				<?php $objectManager = \Magento\Framework\App\ObjectManager::getInstance(); ?>
+				<?php $fullActionName = $objectManager->get('Magento\Framework\App\Request\Http')->getFullActionName(); ?>
+				<?php if($fullActionName == "catalog_product_view"): ?>
+					<span class="h1"><?php echo __('Product Detail'); ?></span>
+				<?php else: ?>
+					<?php if($crumbs && is_array($crumbs)): ?>
+						<?php foreach ($crumbs as $crumbName => $crumbInfo) : ?>
+							<?php if ($crumbInfo['last']) : ?>
+								<h1><?php echo $block->escapeHtml($crumbInfo['label']) ?></h1>
+							<?php endif ?>
+						<?php endforeach; ?>
+					<?php else: ?>
+						<?php echo $this->getLayout()->createBlock("Magento\Theme\Block\Html\Title")->setTemplate("Magento_Theme::html/title.phtml")->toHtml(); ?>
+					<?php endif ?>
+				<?php endif ?>
+			</div>
+			<?php if ($crumbs && is_array($crumbs)) : ?>
+				<ol class="breadcrumb">
+					<?php foreach ($crumbs as $crumbName => $crumbInfo) : ?>
+						<?php if ($crumbInfo['link']) : ?>
+							<li class="item <?php /* @escapeNotVerified */ echo $crumbName ?>">
+								<a href="<?php /* @escapeNotVerified */ echo $crumbInfo['link'] ?>" title="<?php echo $block->escapeHtml($crumbInfo['title']) ?>">
+									<?php echo $block->escapeHtml($crumbInfo['label']) ?>
+								</a>
+							</li>
+						<?php elseif ($crumbInfo['last']) : ?>
+							<li class="active">
+								<?php echo $block->escapeHtml($crumbInfo['label']) ?>
+							</li>
+						<?php else: ?>
+							<li class="item">
+								<?php echo $block->escapeHtml($crumbInfo['label']) ?>
+							</li>
+						<?php endif; ?>
+					<?php endforeach; ?>
+				</ol>
+			<?php endif ?>
+		</div>
+	</div>
+</div>

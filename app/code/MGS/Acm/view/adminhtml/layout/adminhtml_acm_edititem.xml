@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd" layout="admin-2columns-left">
+	<head>
+		<css src="MGS_Acm::css/style.css" />
+    </head>
+	<update handle="editor"/>
+	<body>
+		<referenceContainer name="left">
+			<block class="MGS\Acm\Block\Adminhtml\Edit\Itemtabs" name="megamenu_edit_item_tabs">
+			</block>
+		</referenceContainer>
+		
+		<referenceContainer name="footer">
+			<block class="Magento\Framework\View\Element\Template" name="acm_edit_item_script" template="MGS_Acm::item/script.phtml" after="-"></block>
+		</referenceContainer>
+	</body>
+</page>

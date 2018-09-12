@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+		<add id="MGS_Acm::acm" title="Advanced Content" module="MGS_Acm" sortOrder="120" parent="Magento_Backend::mgs" resource="MGS_Acm::acm"/>
+		<add id="MGS_Acm::types" title="Manage Content Types" module="MGS_Acm" sortOrder="10" resource="MGS_Acm::types" action="adminhtml/acm/" parent="MGS_Acm::acm"/>
+    </menu>
+</config>

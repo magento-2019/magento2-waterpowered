@@ -1,0 +1,55 @@
+<script>
+	require([
+		'jquery'
+	], function(jQuery){
+		(function($) {
+			var parentUrl = $('#url_parent').val();
+			var baseUrl = $('#url_key_base').val();
+			var tempUrl = $('#url_key_temp').val();
+			$("#url_key").keydown(function(event) {
+				if ( event.which != 13 ) {
+					var identifier = $(this).val();
+					if(identifier!=''){
+						url = baseUrl + parentUrl + '/' + identifier;
+					}else{
+						url = tempUrl;
+					}
+					$("#router-change").html(url);
+				}else{
+					event.preventDefault();
+				}
+			});
+			$("#url_key").keyup(function(event) {
+				if ( event.which != 13 ) {
+					var identifier = $(this).val();
+					if(identifier!=''){
+						url = baseUrl + parentUrl + '/' + identifier;
+					}else{
+						url = tempUrl;
+					}
+					$("#router-change").html(url);
+				}else{
+					event.preventDefault();
+				}
+			});
+		})(jQuery);
+	});
+	
+	require([
+		"jquery",
+		"underscore",
+		"mage/mage",
+		"domReady!"
+	], function($, TypeSwitcher){
+		var $form = $('[data-form=edit_form]');
+		$form.mage('form', {
+			handlersData: {
+				saveAndNew: {
+					action: {
+						args: {back: 'new'}
+					}
+				}
+			}
+		});
+	});
+</script>

@@ -1,0 +1,37 @@
+#Manage_Fields hr{margin-bottom:40px; border:1px solid #adadad; border-bottom:none}
+.ui-tabs{position:relative;}
+.ui-tabs ul li a{text-decoration:none !important}
+.ui-tabs button{position:absolute; right:0; top:10px}
+#Manage_Fields .input-text{min-width:100%}
+#Manage_Fields table.admin__control-table th, #Manage_Fields table.admin__control-table td{background:#efefef; color:#303030; border:none}
+#Manage_Fields table.admin__control-table th{padding-top:10px; padding-bottom:10px; padding-left:1.5rem}
+#Manage_Fields table.admin__control-table td{border-bottom:1px solid #fff}
+#Manage_Fields table.admin__control-table tr:last-child td{border-bottom:none}
+#acm_tabs_main_section_content .delete-file{line-height:16px}
+#acm_tabs_main_section_content .delete-file  label{line-height:16px}
+.file-ex-icon{padding-left:18px; background:url('../images/unknow.png') left 2px no-repeat}
+.file-ex-icon.file-mp4, .file-ex-icon.file-mkv, .file-ex-icon.file-vob, .file-ex-icon.file-ogv, .file-ex-icon.file-ogg, .file-ex-icon.file-drc, .file-ex-icon.file-avi, .file-ex-icon.file-mov, .file-ex-icon.file-wmv, .file-ex-icon.file-rmvb, .file-ex-icon.file-m4p, .file-ex-icon.file-mpg, .file-ex-icon.file-mpeg, .file-ex-icon.file-mpg, .file-ex-icon.file-m2v, .file-ex-icon.file-m4v, .file-ex-icon.file-3gp, .file-ex-icon.file-mxf{background:url('../images/mp4.png') left 2px no-repeat}
+.file-ex-icon.file-doc,.file-ex-icon.file-docx,.file-ex-icon.file-odt{background:url('../images/doc.png') left 2px no-repeat}
+.file-ex-icon.file-xls,.file-ex-icon.file-xlsx,.file-ex-icon.file-ods{background:url('../images/xls.png') left 2px no-repeat}
+.file-ex-icon.file-ppt,.file-ex-icon.file-pptx,.file-ex-icon.file-odp{background:url('../images/ppt.png') left 2px no-repeat}
+.file-ex-icon.file-zip,.file-ex-icon.file-rar{background:url('../images/zip.png') left 2px no-repeat}
+.file-ex-icon.file-ai{background:url('../images/ai.png') left 2px no-repeat}
+.file-ex-icon.file-apk{background:url('../images/apk.png') left 2px no-repeat}
+.file-ex-icon.file-mp3{background:url('../images/mp3.png') left 2px no-repeat}
+.file-ex-icon.file-pdf{background:url('../images/pdf.png') left 2px no-repeat}
+.file-ex-icon.file-psd{background:url('../images/psd.png') left 2px no-repeat}
+.file-ex-icon.file-txt{background:url('../images/txt.png') left 2px no-repeat}
+.file-ex-icon.file-xml{background:url('../images/xml.png') left 2px no-repeat}
+.file-ex-icon.file-flv{background:url('../images/flv.png') left 2px no-repeat}
+.file-ex-icon.file-swf{background:url('../images/swf.png') left 2px no-repeat}
+#field-items .ui-state-default{list-style:none; background:#fff}
+#field-items .ui-state-default .draggable-handle{
+	background: rgba(0, 0, 0, 0) url("../../Magento_Backend/images/draggable-handle-vertical.png") no-repeat scroll 0 0;
+    color: #b2b0ad;
+    cursor: ns-resize;
+    height: 14px;
+    line-height: 14px;
+    width: 8px;}
+#field-items .ui-sortable-helper{background:#e5f7fe; border:1px solid #e5f7fe; height:80px !important; overflow:hidden !important}
+#field-items .ui-sortable-helper hr{border-color:#e5f7fe}
+#field-items .ui-sortable-helper .data-grid-filters, #field-items .ui-sortable-helper .ui-tabs{display:none}

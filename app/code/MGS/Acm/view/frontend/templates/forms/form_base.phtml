@@ -1,0 +1,70 @@
+<?php $content = $this->getContent() ?>
+<?php 
+/*
+	$content->getTitle() // get Title text
+	$content->getDescription() // get Description text
+	$content->getFormLegend() // get Legend text
+	$content->getFormNote() // get Note text
+*/
+?>
+
+<?php if($content->getDescription() != ''): ?>
+	<div class="block-acm-description block block-static-block">
+		<span><?php echo $content->getDescription() ?></span>
+	</div>
+<?php endif ?>
+
+<?php $fields = $this->getFields() ?>
+<?php if(count($fields)>0): ?>
+	<form id="<?php echo $content->getIdentifier() ?>-form" class="form" data-hasrequired="<?php echo __('* Required Fields') ?>" method="post" action="<?php echo $this->getUrl('acm/index/post', ['type_id'=>$this->getRequest()->getParam('type_id')]) ?>" enctype="multipart/form-data" data-mage-init='{"validation":{}}'>
+		<fieldset class="fieldset">
+		
+			<?php // Form Legend ?>
+			<?php if($content->getFormLegend()!=''): ?>
+				<legend class="legend"><span><?php echo $content->getFormLegend() ?></span></legend>
+			<?php endif ?>
+			
+			<?php if($content->getFormNote()!=''): ?>
+				<br/>
+				<div class="field note no-label"><?php echo $content->getFormNote() ?></div>
+			<?php endif ?>
+			
+			<?php /* Auto generate form fields */?>
+			<?php foreach($fields as $_field): ?>
+				<div class="field <?php echo $_field->getIdentifier() ?><?php if($_field->getIsRequired()): ?> required<?php endif ?>">
+					<label for="<?php echo $_field->getIdentifier() ?>" class="label"><span><?php echo $_field->getTitle() ?></span></label>
+					<div class="control">
+						<?php echo $this->getInputHtml($_field) ?>
+						<?php if($_field->getNote()!=''): ?>
+							<p class="note"><span><?php echo $_field->getNote() ?></span></p>
+						<?php endif ?>
+					</div>
+				</div>
+			<?php endforeach ?>
+			<?php /* Or you can use this function to get form fields: <?php echo $this->getFormField("identifier_of_field") ?> */?>
+			
+			<?php /* Captcha */ ?>
+			<?php if($content->getFormCaptcha()): ?>
+				<?php echo $this->getLayout()->createBlock('MGS\Acm\Block\Captcha')->setFormId('acm_form')->setImgWidth(230)->setImgHeight(50)->toHtml();?>
+				<script type="text/javascript">
+					require([
+						'jquery'
+					], function(jQuery){
+						(function($) {
+							$(window).load(function () {
+								$('button.captcha-reload').click();
+							});
+						})(jQuery);
+					});
+				</script>
+			<?php endif ?>
+		</fieldset>
+		<div class="actions-toolbar">
+			<div class="primary">
+				<button class="action submit primary" title="<?php echo __('Submit') ?>" type="submit">
+					<span><?php echo __('Submit') ?></span>
+				</button>
+			</div>
+		</div>
+	</form>
+<?php endif ?>

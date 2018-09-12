@@ -1,0 +1,34 @@
+<?php if($contentData = $this->getContentData()): ?>
+	<?php $itemCollection = $this->getItemCollection() ?>
+	<?php 
+	/*
+		$contentData is an array
+		$contentData['acm_id'] is ID
+		$contentData['title'] is Title
+		$contentData['description'] is Description
+	*/	
+	?>
+
+	<?php if($contentData['description'] != ''): ?>
+		<div class="block-acm-description block block-static-block">
+			<span><?php echo $contentData['description'] ?></span>
+		</div>
+	<?php endif ?>
+<?php endif ?>
+<div class="toolbar top-toolbar">
+	<?php echo $block->getPagerHtml() ?>
+</div>
+<?php if(count($itemCollection)>0): ?>
+	<?php foreach($itemCollection as $item): ?>
+		<div class="item">
+			<?php /* To get Item Information you can use $item->getData('identifier_of_field') */?>
+			<div>Title: <?php echo $item->getData('title') ?></div>
+			<div>Base Image: <?php echo $item->getData('base_image') ?></div>
+			
+			<a href="<?php echo $this->getDetailUrl($item) ?>"><?php echo __('View Detail') ?></a>
+		</div>
+	<?php endforeach ?>
+<?php endif ?>
+<div class="toolbar bottom-toolbar">
+	<?php echo $block->getPagerHtml() ?>
+</div>

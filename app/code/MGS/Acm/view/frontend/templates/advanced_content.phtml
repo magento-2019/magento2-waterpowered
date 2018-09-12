@@ -1,0 +1,14 @@
+<?php $type = $this->getType(); ?>
+<?php if($type->getContentType()==2): ?>
+	<?php if($type->getTemplate()!=''): ?>
+		<?php echo $this->getLayout()->createBlock('MGS\Acm\Block\Form')->setContent($type)->setTemplate($type->getTemplate())->toHtml() ?>
+	<?php else: ?>
+		<?php echo $this->getLayout()->createBlock('MGS\Acm\Block\Form')->setContent($type)->setTemplate('forms/form_base.phtml')->toHtml() ?>
+	<?php endif ?>
+<?php else: ?>
+	<?php if($type->getTemplate()!=''): ?>
+		<?php echo $this->getLayout()->createBlock('MGS\Acm\Block\ListItem')->setTemplate($type->getTemplate())->toHtml() ?>
+	<?php else: ?>
+		<?php echo $this->getLayout()->createBlock('MGS\Acm\Block\ListItem')->setTemplate('advanced_content/list/list_base.phtml')->toHtml() ?>
+	<?php endif ?>
+<?php endif ?>

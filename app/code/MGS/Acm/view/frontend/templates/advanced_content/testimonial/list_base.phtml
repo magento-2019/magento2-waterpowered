@@ -1,0 +1,42 @@
+<?php if($contentData = $this->getContentData()): ?>
+	<?php $itemCollection = $this->getItemCollection() ?>
+	<?php 
+	/*
+		$contentData is an array
+		$contentData['acm_id'] is ID
+		$contentData['title'] is Title
+		$contentData['description'] is Description
+	*/	
+	?>
+
+	<?php if($contentData['description'] != ''): ?>
+		<div class="block-acm-description block block-static-block">
+			<span><?php echo $contentData['description'] ?></span>
+		</div>
+	<?php endif ?>
+<?php endif ?>
+<div class="toolbar top-toolbar">
+	<?php echo $block->getPagerHtml() ?>
+</div>
+<?php if(count($itemCollection)>0): ?>
+	<?php foreach($itemCollection as $item): ?>
+		<div class="item">
+			<?php /* To get Item Information you can use $item->getData('identifier_of_field') */?>
+			<div><?php echo $item->getData('title') ?></div>
+			<div><?php echo $item->getData('image') ?></div>
+			<div><?php echo $item->getData('status') ?></div>
+			<div><?php echo $item->getData('content') ?></div>
+			<div><?php echo $item->getData('upload_file') ?></div>
+			<div><?php echo $item->getData('date') ?></div>
+			<div><?php echo $item->getData('sex') ?></div>
+			<div><?php echo $item->getData('category') ?></div>
+			<div><?php echo $item->getData('category_2') ?></div>
+			<div><?php echo $item->getData('related_products') ?></div>
+			
+			<a href="<?php echo $this->getDetailUrl($item) ?>"><?php echo __('View Detail') ?></a>
+		</div>
+	<?php endforeach ?>
+<?php endif ?>
+<div class="toolbar bottom-toolbar">
+	<?php echo $block->getPagerHtml() ?>
+</div>

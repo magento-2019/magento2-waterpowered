@@ -1,0 +1,159 @@
+<?php $contentType = $this->getModel() ?>
+<?php $type = $contentType->getContentType() ?>
+<div class="entry-edit form-inline">
+	<fieldset id="acm_template_base_fieldset" class="fieldset admin__fieldset ">
+		
+		<?php if($type==2): ?>
+		
+			<legend class="admin__legend legend">
+				<span><?php echo __('Template Information') ?></span>
+			</legend>
+			<br/>
+		
+			<div class="admin__field field field-template required _required" data-ui-id="adminhtml-edit-tab-template-0-fieldset-element-form-field-form-action">
+				<label data-ui-id="adminhtml-edit-tab-template-0-fieldset-element-select-form-action-label" for="acm_template_form_action" class="label admin__field-label"><span><?php echo __('Template Path') ?></span></label>
+				<div class="admin__field-control control">
+					<?php $value = $contentType->getTemplate() ?>
+					<?php if($value==''): ?>
+						<?php $value = $this->getDefaultFormTemplate() ?>
+					<?php endif ?>
+					<input type="text" class="input-text admin__control-text required-entry" value="<?php echo $value ?>" data-ui-id="adminhtml-edit-tab-template-0-fieldset-element-text-template" name="template" id="acm_template_form_action" />
+					<div id="template-note" class="note"><?php echo __('You can find template to modify at:<br/><strong>app/code/MGS/Acm/view/frontend/templates/%1</strong>', $value) ?></div>
+				</div>
+			</div>
+			
+			<div class="admin__field field field-var-note required _required" data-ui-id="adminhtml-edit-tab-template_detail-0-fieldset-var_note-form-field-form-action">
+				<hr/>
+				<br/>
+				<?php echo __('In template files, you can use this function to get form field: <strong>&lt;?php echo $this->getFormField("identifier_of_field") ?&gt;</strong>') ?>
+				<br/><br/>
+				<p><strong><?php echo __('Example: ') ?></strong></p>
+				<?php if($id = $this->getRequest()->getParam('id')): ?>
+					<?php $fields = $this->getFields($id) ?>
+					<?php if(count($fields)>0): ?>
+						
+						<?php foreach($fields as $field): ?>
+							<p>- <?php echo __('Get %1 field: <strong>&lt;?php echo $this->getFormField("%2") ?&gt;</strong>', $field->getTitle(), $field->getIdentifier()) ?></p>
+						<?php endforeach ?>
+					<?php else: ?>
+						<p><strong><?php echo __('Add fields and save to see example.') ?></strong></p>
+					<?php endif ?>
+				<?php endif ?>
+			</div>
+		<?php else: ?>
+		
+			<legend class="admin__legend legend">
+				<span><?php echo __('List View') ?></span>
+			</legend>
+			<br/>
+		
+			<div class="admin__field field field-template" data-ui-id="adminhtml-edit-tab-template-0-fieldset-element-form-field-form-action">
+				<label data-ui-id="adminhtml-edit-tab-page_size-fieldset-element-select-form-action-label" for="acm_page_size_form_action" class="label admin__field-label"><span><?php echo __('Number of Item per page') ?></span></label>
+				<div class="admin__field-control control">
+					<input type="text" class="input-text admin__control-text validate-number validate-greater-than-zero" value="<?php echo $contentType->getPageSize() ?>" data-ui-id="adminhtml-edit-tab-page_size-fieldset-element-text-template" name="page_size" id="acm_page_size_form_action" />
+				</div>
+			</div>
+			
+			<div class="admin__field field field-template required _required" data-ui-id="adminhtml-edit-tab-template-0-fieldset-element-form-field-form-action" style="margin-bottom:5px">
+				<label data-ui-id="adminhtml-edit-tab-template-0-fieldset-element-select-form-action-label" for="acm_template_form_action" class="label admin__field-label"><span><?php echo __('Template path for list view') ?></span></label>
+				<div class="admin__field-control control">
+					<?php $value = $contentType->getTemplate() ?>
+					<?php if($value==''): ?>
+						<?php $value = $this->getDefaultListTemplate() ?>
+					<?php endif ?>
+					<input type="text" class="input-text admin__control-text required-entry" value="<?php echo $value ?>" data-ui-id="adminhtml-edit-tab-template-0-fieldset-element-text-template" name="template" id="acm_template_form_action" />
+					<div id="template-note" class="note"><?php echo __('You can find template to modify at:<br/><strong>app/code/MGS/Acm/view/frontend/templates/%1</strong>', $value) ?></div>
+					<div><?php echo __('list_base.phtml is file base, you should create new file and copy content from list_base.phtml to edit') ?></div>
+				</div>
+			</div>
+			
+			<div class="admin__field field field-template-note required _required" data-ui-id="adminhtml-edit-tab-template-note-0-fieldset-element-form-field-form-action">
+				<div class="note">
+					<?php echo __('You can call list view to any pages with this code: ') ?><br>
+					<strong>{{block class="MGS\Acm\Block\ListItem" type_id="id_of_content_type" template="<?php echo $value ?>"}}</strong><br/><br/>
+					<?php echo __('Into this code, you can use identifier of fields to filter items. Eg:') ?><br/>
+					<strong>{{block class="MGS\Acm\Block\ListItem" type_id="id_of_content_type" filter="'<span style="color:#ff0000">category</span>':'<span style="color:#0000ff">Category 1</span>','<span style="color:#ff0000">status</span>':'<span style="color:#0000ff">Yes</span>'" template="<?php echo $value ?>"}}</strong><br/><br/>
+					<strong>id_of_content_type</strong>  is ID of content type.<?php if($id = $this->getRequest()->getParam('id')): ?> Eg: ID of current content type is <?php echo $id ?><?php endif ?><br/>
+					<strong><span style="color:#ff0000">category</span></strong> and <strong><span style="color:#ff0000">status</span></strong> are identifier of fields.<br/>
+					<strong><span style="color:#0000ff">Category 1</span></strong> and <strong><span style="color:#0000ff">Yes</span></strong> are values.<br/>
+					<?php echo __('For this way, you can use cms pages to create category pages for content types.') ?><br/>
+					<i style="color:#ff0000"><?php echo __('Remember: when you insert this code to cms pages or cms static blocks, please insert at html mode, do not insert at editor mode.') ?></i>
+				</div>
+			</div>
+			
+			<?php $check = false; ?>
+			<?php if($id = $this->getRequest()->getParam('id')): ?>
+				<?php if($this->hasProducts($id)): ?>
+					<?php $check = true; ?>
+					<div class="admin__field field field-template_products required _required" data-ui-id="adminhtml-edit-tab-template_products-0-fieldset-element-form-field-form-action">
+						<label data-ui-id="adminhtml-edit-tab-template_products-0-fieldset-element-select-form-action-label" for="acm_template_products_form_action" class="label admin__field-label"><span><?php echo __('Template path for products') ?></span></label>
+						<div class="admin__field-control control">
+							<?php $value = $contentType->getTemplateProducts() ?>
+							<?php if($value==''): ?>
+								<?php $value = $this->getDefaultProductsTemplate() ?>
+							<?php endif ?>
+							<input type="text" class="input-text admin__control-text required-entry" value="<?php echo $value ?>" data-ui-id="adminhtml-edit-tab-template_products-0-fieldset-element-text-template" name="template_products" id="acm_template_products_form_action" />
+							<div id="template-note" class="note"><?php echo __('You can find template to modify at:<br/><strong>app/code/MGS/Acm/view/frontend/templates/%1</strong>', $value) ?></div>
+							<div><?php echo __('products_base.phtml is file base of extension, you should create new file and copy content from products_base.phtml to edit') ?></div>
+						</div>
+					</div>
+				<?php endif ?>
+			<?php endif ?>
+			
+			<br/>
+			
+			<legend class="admin__legend legend">
+				<span><?php echo __('Detail View') ?></span>
+			</legend>
+			<br/>
+			
+			<div class="admin__field field field-template_detail required _required" data-ui-id="adminhtml-edit-tab-template_detail-0-fieldset-element-form-field-form-action">
+				<label data-ui-id="adminhtml-edit-tab-template_detail-0-fieldset-element-select-form-action-label" for="acm_template_detail_form_action" class="label admin__field-label"><span><?php echo __('Template path for detail view') ?></span></label>
+				<div class="admin__field-control control">
+					<?php $value = $contentType->getTemplateDetail() ?>
+					<?php if($value==''): ?>
+						<?php $value = $this->getDefaultDetailTemplate() ?>
+					<?php endif ?>
+					<input type="text" class="input-text admin__control-text required-entry" value="<?php echo $value ?>" data-ui-id="adminhtml-edit-tab-template_detail-0-fieldset-element-text-template" name="template_detail" id="acm_template_detail_form_action" />
+					<div id="template-note" class="note"><?php echo __('You can find template to modify at:<br/><strong>app/code/MGS/Acm/view/frontend/templates/%1</strong>', $value) ?></div>
+					<div><?php echo __('view_base.phtml is file base, you should create new file and copy content from view_base.phtml to edit') ?></div>
+				</div>
+			</div>
+			
+			<?php if($check): ?>
+				<div class="admin__field field field-template_products_detail required _required" data-ui-id="adminhtml-edit-tab-template_products_detail-0-fieldset-element-form-field-form-action">
+					<label data-ui-id="adminhtml-edit-tab-template_products_detail-0-fieldset-element-select-form-action-label" for="acm_template_products_form_action" class="label admin__field-label"><span><?php echo __('Template path for products') ?></span></label>
+					<div class="admin__field-control control">
+						<?php $value = $contentType->getTemplateProductsDetail() ?>
+						<?php if($value==''): ?>
+							<?php $value = $this->getDefaultProductsTemplate() ?>
+						<?php endif ?>
+						<input type="text" class="input-text admin__control-text required-entry" value="<?php echo $value ?>" data-ui-id="adminhtml-edit-tab-template_products_detail-0-fieldset-element-text-template" name="template_products_detail" id="acm_template_products_form_action" />
+						<div id="template-note" class="note"><?php echo __('You can find template to modify at:<br/><strong>app/code/MGS/Acm/view/frontend/templates/%1</strong>', $value) ?></div>
+						<div><?php echo __('products_base.phtml is file base of extension, you should create new file and copy content from products_base.phtml to edit') ?></div>
+					</div>
+				</div>
+			<?php endif ?>
+			
+			<div class="admin__field field field-var-note required _required" data-ui-id="adminhtml-edit-tab-template_detail-0-fieldset-var_note-form-field-form-action">
+				
+				<br/>
+				<?php echo __('In template files, you can use this function to get data: <strong>&lt;?php echo $this->getDataInfo("identifier_of_field") ?&gt;</strong>') ?>
+				<br/><br/>
+				<p><strong><?php echo __('Example: ') ?></strong></p>
+				<?php if($id = $this->getRequest()->getParam('id')): ?>
+					<?php $fields = $this->getFields($id) ?>
+					<?php if(count($fields)>0): ?>
+						
+						<?php foreach($fields as $field): ?>
+							<p>- <?php echo __('Get %1: <strong>&lt;?php echo $this->getDataInfo("%2") ?&gt;</strong>', $field->getTitle(), $field->getIdentifier()) ?></p>
+						<?php endforeach ?>
+					<?php else: ?>
+						<p><strong><?php echo __('Add fields and save to see example.') ?></strong></p>
+					<?php endif ?>
+				<?php endif ?>
+			</div>
+		<?php endif ?>
+		
+	</fieldset>
+</div>
