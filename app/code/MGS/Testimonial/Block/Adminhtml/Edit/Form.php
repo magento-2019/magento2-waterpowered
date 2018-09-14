@@ -85,12 +85,17 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
 		
 		$fieldset->addField(
             'information',
-            'text',
+            'select',
             [
-                'label' => __('Information'),
+                'label' => __('Marchio'),
                 'name' => 'information',
-                'required' => false,
-                'value' => $model->getInformation()
+                'required' => true,
+                'options' => ['SoWash' => __('SoWash'),
+                    'My Perfect Colon' => __('My Perfect Colon'),
+                    'Hello Bidet' => __('Hello Bidet'),
+                    'Hello Bear' => __('Hello Bear'),
+                    'Pink Shower' => __('Pink Shower')
+                    ]
             ]
         );
 
