@@ -34,8 +34,11 @@ class Testimonial extends Template
 	public function getCollection(){
 		$model = $this->getModel();
 		$collection = $model->getCollection()
-			->addFieldToFilter('status', 1)
-			->setOrder('testimonial_id', 'DESC');
+			->addFieldToFilter('status', 1);
+        if($this->hasData('information')){
+            $collection->addFieldToFilter('information', $this->getData('information'));
+        }
+        $collection->setOrder('testimonial_id', 'DESC');
 		if($this->hasData('testimonials_count')){
 			$collection->setPageSize($this->getData('testimonials_count'));
 		}
